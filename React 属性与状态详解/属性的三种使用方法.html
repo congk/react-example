@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>属性的三种使用方式</title>
+</head>
+<body>
+	<script type="text/javascript" src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		//属性是与生俱来的，组件自己不应该修改自己的属性，区别于状态
+		$(document).ready(function(){
+			var HelloWorld = React.createClass({
+				getDefaultProps: function(){
+					return {name1: "Tim", name2: "John"};
+				},
+				render: function(){
+					console.log(this.props);
+					return <p>hello, {this.props.name1 + "," + this.props.name2}</p>;
+				}
+			});
+			//使用方式一
+			React.render(<HelloWorld name1="TT_1" name2="MM_1"></HelloWorld>, document.getElementById("container1"));
+			
+			//使用方式二：事先声明一个对象props，然后用{...props}赋值给helloworld组件
+			var props = {name1: "TT_2", name2: "MM_2"};
+			React.render(<HelloWorld {...props}></HelloWorld>, document.getElementById("container2"));
+			
+			//使用方式三：使用setProps({}) api，不推荐
+			var instance = React.render(<HelloWorld></HelloWorld>, document.getElementById("container3"));
+			instance.setProps({name1: "TT_3", name2: "MM_3"});
+		});	
+	</script>
+	<div id="container1"></div>
+	<div id="container2"></div>
+	<div id="container3"></div>
+</body>
+</html>

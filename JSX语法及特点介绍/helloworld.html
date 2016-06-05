@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>Hello, React!</title>
+</head>
+<body>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		var style = {
+			color: "red",
+			border: "1px #000 solid"
+		};
+		var HelloWorld = React.createClass({
+            getInitialState: function(){
+                return {s: 1};
+            },
+            componentWillReceiveProps: function (props, obj){
+                console.log(props, this.props, obj);
+            },
+            shouldComponentUpdate: function (props, state, obj){
+                return true;
+            },
+			render: function(){
+				return <p>Hello, {(function(obj){
+					if(obj.props.name)
+						return obj.props.name;
+					else
+						return "World";
+				})(this)}!</p>;
+			}
+		});
+
+        var Tester = React.createClass({
+            getInitialState: function(){
+                return {name: "World"};
+            },
+            handleClick: function(){
+                this.setState({name: Math.floor(Math.random()*10000).toString(16)});
+            },
+            render: function(){
+                return <div style={style}>
+                    <HelloWorld name={this.state.name} ref="hello"></HelloWorld>
+                    <button type="button" onClick={this.handleClick}>Click</button>
+                </div>
+            }
+        });
+		React.render(<Tester></Tester>, document.body);
+	</script>
+</body>
+</html>

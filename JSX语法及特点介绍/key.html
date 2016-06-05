@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>Hello, React!</title>
+</head>
+<body>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		//列表项一定要加上唯一的key以提升性能
+		var style = {
+			color: "red",
+			border: "1px #000 solid"
+		};
+		var rawHTML = {
+			__html: "<h1>I am inner HTML.</h1>"
+		};
+		var HelloWorld = React.createClass({
+			render: function(){
+				return <ul>
+					<li key="key1">1</li>
+					<li key="key2">2</li>
+					<li key="key3">3</li>
+				</ul>
+			}
+		});
+		React.render(
+		<div style={style}><HelloWorld/></div>, document.body);
+	</script>
+</body>
+</html>

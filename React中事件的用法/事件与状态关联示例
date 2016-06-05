@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>记录鼠标移动坐标</title>
+</head>
+<body>
+	<script type="text/javascript" src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		$(document).ready(function(){
+			//记录鼠标移动坐标
+			var HelloWorld = React.createClass({
+				getInitialState: function(){
+					return {x: 0, y: 0};
+				},
+				handleMouseMove: function(event){
+					this.setState({
+						x: event.clientX, y: event.clientY
+					});
+				},
+				render: function(){
+					return <div onMouseMove={this.handleMouseMove} style={{height:'1000px',width:'700px',backgroundColor: 'gray'}}>
+						{this.state.x + ', ' + this.state.y}	
+					</div>
+				}
+			});
+			React.render(<HelloWorld></HelloWorld>, document.body);
+		});	
+	</script>
+</body>
+</html>

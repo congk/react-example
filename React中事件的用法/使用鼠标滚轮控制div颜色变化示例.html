@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>使用鼠标滚轮控制div颜色变化示例</title>
+</head>
+<body>
+	<script type="text/javascript" src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		$(document).ready(function(){
+			//使用鼠标滚轮控制事件div颜色变化示例
+			var HelloWorld = React.createClass({
+				getInitialState: function(){
+					return {backgroundColor: "#FFFFFF"};
+				},
+				handleWheel: function(event){
+					var newColor = (parseInt(this.state.backgroundColor.substr(1), 16) + event.deltaY * 997).toString(16);
+					newColor = "#" + newColor.substr(newColor.length - 6).toUpperCase();
+					this.setState({backgroundColor: newColor})
+				},
+				render: function(){
+					console.log(this.state);
+					return <div onWheel={this.handleWheel} style={this.state}>
+						<p>hello, world</p>
+					</div>
+				}
+			});
+			React.render(<HelloWorld></HelloWorld>, document.body);
+		});	
+	</script>
+</body>
+</html>

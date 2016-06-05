@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>Mixin的编写与使用示例</title>
+	<style type="text/css">
+		*{font-size: 30px;}
+	</style>
+</head>
+<body>
+	<script type="text/javascript"
+			src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		$(document).ready(function(){
+			/*
+			//不使用Mixin的编写方式
+			var BindingExample = React.createClass({
+				getInitialState: function(){
+					return {text: ""};
+				},
+				handleChange: function(event){
+					this.setState({text: event.target.value});
+				},
+				render: function(){
+					return <div>
+						<input type="text" placeholder="请输入内容" onChange={this.handleChange}></input>
+						<p>{this.state.text}</p>
+					</div>
+				}
+			});
+			*/
+
+			//Mixin 的使用示例
+			var BindingMixin = {
+				handleChange: function(key){
+					return (function(event){
+						var newState = {};
+						newState[key] = event.target.value;
+						this.setState(newState);
+					}).bind(this);
+				}
+			};
+			var BindingExample = React.createClass({
+				mixins: [BindingMixin],		//一个组件可以整合多个Mixin定义
+				getInitialState: function(){
+					return {text: "", comment: ""};
+				},
+				render: function(){
+					return <div>
+						<input type="text" placeholder="请输入内容" onChange={this.handleChange('text')}/>
+						<p>{this.state.text}</p>
+						<textarea type="text" placeholder="请输入内容" onChange={this.handleChange('comment')}/>
+						<p>{this.state.comment}</p>
+					</div>
+				}
+			});
+			React.render(<BindingExample></BindingExample>, document.body);
+		});	
+	</script>
+</body>
+</html>

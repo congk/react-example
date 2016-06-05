@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>可控组件与不可控组件示例</title>
+	<style type="text/css">
+		*{font-size: 30px;}
+	</style>
+</head>
+<body>
+	<script type="text/javascript" src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		$(document).ready(function(){
+			var MyForm = React.createClass({
+				getInitialState: function(){
+					return {
+						username: "",
+						gender: "man",
+						checked: true
+					};
+				},
+				handleUsernameChange: function(event){
+					this.setState({username: event.target.value});
+				},
+				handleGenderChange: function(event){
+					this.setState({gender: event.target.value});
+				},
+				handleCheckboxChange: function(event){
+					this.setState({checked: event.target.checked});
+				},
+				submitHandler: function(event){
+					event.preventDefault();
+					console.log(this.state);
+				},
+				render: function(){
+					return <form onSubmit={this.submitHandler}>
+						<label htmlFor="username">请输入用户名：</label>
+						<input type="text" id="username" value={this.state.username} onChange={this.handleUsernameChange}/>
+						<br/>
+						<select value={this.state.gender} onChange={this.handleGenderChange}>
+							<option value="man">男</option>
+							<option value="woman">女</option>
+						</select>
+						<br/>
+						<input id="checkbox" type="checkbox" checked={this.state.checked} onChange={this.handleCheckboxChange}/>
+						<label htmlFor="checkbox">同意用户协议</label>
+						<br/>
+						<button type="submit">注册</button>
+					</form>
+				}
+			});
+
+			React.render(<MyForm></MyForm>, document.body);
+		});	
+	</script>
+</body>
+</html>

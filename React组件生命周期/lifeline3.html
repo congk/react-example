@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>React组件的生命周期（销毁阶段）</title>
+</head>
+<body>
+	<script type="text/javascript" src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		//组件的生命周期，销毁阶段，用于清理计时器等清理工作
+		$(document).ready(function(){
+			var style = {
+				color: "red",
+				border: "1px #000 solid"
+			};
+			var HelloWorld = React.createClass({
+				render: function(){
+					console.log("render");
+					return <p>hello, {this.props.name||"world"}</p>;
+				},
+				componentWillUnmount: function(){
+					console.log("BOOOOOOOOOOOM!");
+				}
+			});
+			var HelloUniverse = React.createClass({
+				getInitialState: function(){
+					return {name: ""};
+				},
+				handleChange: function(event){
+					if(event.target.value == "123"){
+						React.unmountComponentAtNode(document.getElementsByTagName("body")[0]);
+						return;
+					}
+					this.setState({name: event.target.value});
+				},
+				render: function(){
+					return <div>
+					<HelloWorld name={this.state.name}></HelloWorld>
+					<br/>
+					<input type="text" onChange={this.handleChange}/>
+					</div>;
+				}
+			});
+			React.render(<div style={style}><HelloUniverse/></div>, document.body);
+		});	
+	</script>
+</body>
+</html>

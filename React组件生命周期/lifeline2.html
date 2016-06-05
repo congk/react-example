@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>React组件的生命周期（运行阶段）</title>
+</head>
+<body>
+	<script type="text/javascript" src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		//组件的生命周期，运行阶段
+		$(document).ready(function(){
+			var style = {
+				color: "red",
+				border: "1px #000 solid"
+			};
+			var HelloWorld = React.createClass({
+				componentWillReceiveProps: function(newProps){
+					console.log("componentWillReceiveProps", newProps, this.props);
+				},
+				shouldComponentUpdate: function(){
+					console.log("shouldComponentUpdate");
+					return true;
+				},
+				componentWillUpdate: function(){
+					console.log("componentWillUpdate");
+				},
+				render: function(){
+					console.log("render");
+					return <p>hello, {this.props.name||"world"}</p>;
+				},
+				componentDidUpdate: function(){
+					$(React.findDOMNode(this)).append("surpise!");
+				}
+			});
+			var HelloUniverse = React.createClass({
+				getInitialState: function(){
+					return {name: ""};
+				},
+				handleChange: function(event){
+					this.setState({name: event.target.value});
+				},
+				render: function(){
+					return <div>
+						<HelloWorld name={this.state.name}></HelloWorld>
+						<br/>
+						<input type="text" onChange={this.handleChange}/>
+					</div>
+				}
+			});
+			React.render(<div style={style}><HelloUniverse/></div>, document.body);
+		});	
+	</script>
+</body>
+</html>

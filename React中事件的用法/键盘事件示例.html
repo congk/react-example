@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>键盘事件示例</title>
+</head>
+<body>
+	<script type="text/javascript" src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		$(document).ready(function(){
+			var HelloWorld = React.createClass({
+				getInitialState: function(){
+					return {password: ""};
+				},
+				handleKeyPress: function(event){
+					console.log(event.which);
+					this.setState({
+						password: this.state.password + event.which
+					});
+					console.log(this.state);//注意：这里访问的state依然是更新之前的state
+				},
+				handleChange: function(event){
+					event.target.value = "";
+				},
+				render: function(){
+					return <div>
+						<input onKeyPress={this.handleKeyPress} onChange={this.handleChange}/>
+						<p style={{display: this.state.password.indexOf('495051')>=0?'inline':'none'}}>You got it!</p>
+					</div>
+				}
+			});
+			React.render(<HelloWorld></HelloWorld>, document.body);
+		});	
+	</script>
+</body>
+</html>

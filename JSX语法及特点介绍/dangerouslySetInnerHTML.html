@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>Hello, React!</title>
+</head>
+<body>
+	<!--使用了dangeroutlySetInnerHTML的组件不能够嵌套任何子组件-->
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		var style = {
+			color: "red",
+			border: "1px #000 solid"
+		};
+		var rawHTML = {
+			__html: "<h1>I am inner HTML.</h1>"
+		};
+		var HelloWorld = React.createClass({
+			render: function(){
+				return <p>Hello, {this.props.name||"World"}</p>;
+			}
+		});
+		React.render(
+		<div style={style} dangerouslySetInnerHTML={rawHTML}></div>, document.body);
+	</script>
+</body>
+</html>

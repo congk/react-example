@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>可控组件与不可控组件示例</title>
+	<style type="text/css">
+		*{font-size: 30px;}
+	</style>
+</head>
+<body>
+	<script type="text/javascript" src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		$(document).ready(function(){
+			//不可控组件示例：不可控组件中，获取input组件的value需要先获取DOM对象，从DOM中读取数据
+			var MyForm = React.createClass({
+				submitHandler: function(){
+					event.preventDefault();		//取消跳转
+					var helloTo = React.findDOMNode(this.refs.helloTo).value;
+					console.log(helloTo);
+				},
+				render: function(){
+					return <form onSubmit={this.submitHandler}>
+						<input type="text" ref="helloTo" defaultValue="Hello World"/>
+						<br/>
+						<button type="submit">Speak</button>
+					</form>
+				}
+			});
+
+
+			//可控组件，所有数据存储在状态中
+			var MyForm = React.createClass({
+				getInitialState: function(){
+					return {helloTo: "Hello World"};
+				},
+				handleChange: function(event){
+					this.setState({helloTo: event.target.value});
+				},
+				submitHandler: function(event){
+					event.preventDefault();
+					cnosole.log(this.state.helloTo);
+				},
+				render: function(){
+					return <form onSubmit={this.submitHandler}>
+						<input type="text" value={this.state.helloTo} onChange={this.handleChange}/>
+						<br/>
+						<button type="submit">Speak</button>
+					</form>
+				}
+			});
+
+			React.render(<MyForm></MyForm>, document.body);
+		});	
+	</script>
+</body>
+</html>

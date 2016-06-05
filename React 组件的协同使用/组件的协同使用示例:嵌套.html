@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>组件的协同使用示例:嵌套</title>
+</head>
+<body>
+	<script type="text/javascript" src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+	<script type="text/javascript" src="../build/react.js"></script>
+	<script type="text/javascript" src="../build/JSXTransformer.js"></script>
+	<script type="text/jsx">
+		$(document).ready(function(){
+			var GenderSelect = React.createClass({
+				render: function(){
+					return <select onChange={this.props.handleSelect}>
+						<option value="0">男</option>
+						<option value="1">女</option>
+					</select>
+				}
+			});
+			var SignupForm = React.createClass({
+				getInitialState: function(){
+					return {
+						name: '',
+						password: '',
+						gender: ''
+					};
+				},
+				handleChange: function(name, event){
+					var newState = {};
+					newState[name] = event.target.value;
+					this.setState(newState);
+				},
+				render: function(){
+					console.log(this.state);
+					return <form>
+						<input type="text" placeholder="请输入用户名" onChange={this.handleChange.bind(this, 'name')}/>
+						<input type="password" placeholder="请输入密码" onChange={this.handleChange.bind(this, 'password')}/>
+						<GenderSelect handleSelect={this.handleChange.bind(this,'gender')}></GenderSelect>
+					</form>
+				}
+			});
+
+			React.render(<SignupForm></SignupForm>, document.body);
+		});
+	</script>
+</body>
+</html>
